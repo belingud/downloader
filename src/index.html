@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orcas Media Download</title>
+    <link rel="icon" href="./public/img/favicon.ico" />
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/main.js" type="module"></script>
+    <!-- no-referrer video标签正常播放 -->
+    <meta name="referrer" content="no-referrer" />
+  </head>
+  <body>
+    <div class="container-fluid mx-auto w-100" id="total">
+      <header class="d-flex justify-content-between align-items-md-center">
+        <h1 class="h4">
+          <a
+            href="/"
+            class="d-flex align-items-center text-dark text-decoration-none"
+          >
+            <img
+              src="./public/img/favicon.ico"
+              alt="Logo"
+              width="32"
+              height="32"
+              class="me-2"
+            />
+            <span>Orcas Media Download</span>
+          </a>
+        </h1>
+        <!-- <a href="https://github.com/twbs/examples/tree/main/parcel/" target="_blank" rel="noopener">View on GitHub</a> -->
+      </header>
+      <hr />
+      <h6 class="text-center">
+        We now support downloading Douyin video and images from the share link.
+        TikTok support coming soon.
+      </h6>
+
+      <div class="container flex-grow m-0" id="main">
+        <div class="search-container">
+          <form
+            class="form-inline col-md-8 col-12 col-lg-8 align-items-center d-flex"
+            id="parseForm"
+          >
+            <div class="container" id="searchContainer">
+              <div class="row justify-content-center">
+                <div class="d-flex">
+                  <div class="input-group" id="searchGroup">
+                    <!-- <div class="input-group-prepend">
+                      <button type="button" class="btn btn-outline-secondary dropdown-toggle border-black rounded-end-0" data-bs-toggle="dropdown" id="platformButton" >
+                        DouYin
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" aria-valuetext="DouYin">DouYin</a>
+                        <a class="dropdown-item" aria-valuetext="TikTok">TikTok</a>
+                      </div>
+                    </div> -->
+                    <input
+                      type="search"
+                      class="form-control border-black col-6"
+                      id="searchStr"
+                      placeholder="Input Your Video Share Link"
+                      name="url"
+                      required
+                      autofocus
+                    />
+
+                    <div class="input-group-append">
+                      <div>
+                        <button
+                          class="btn btn-primary rounded-start-0"
+                          id="goButton"
+                          type="submit"
+                        >
+                          Download
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="info-container">
+                    <table id="result-info"></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="result-container h-75 card text-bg-light">
+          <div class="card-header" id="resultCardHeader"></div>
+          <div class="video-container card-body" id="resultCardBody"></div>
+        </div>
+      </div>
+
+      <!-- 提示 -->
+      <section class="feature-promo-seciton ptb-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-10">
+              <div
+                class="section-heading text-center mb-5 mb-sm-5 mb-md-3 mb-lg-3"
+              >
+                <h3>
+                  How to download TikTok video/photo/note without watermark?
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <div
+                class="single-service-plane rounded white-bg shadow-sm p-5 mt-md-4 mt-lg-4"
+              >
+                <div class="service-plane-content text-left">
+                  <p>
+                    1、Open TikTok app on your phone or Web on your browser.
+                  </p>
+                  <p>2、Choose whatever video/photo you want to download.</p>
+                  <p>3、Click to the Share button at the right bottom.</p>
+                  <p>4、Click the Copy Link button.</p>
+                  <p>
+                    5、If you are on the website, copy the URL link directly.
+                  </p>
+                  <p>
+                    6、Go back to Orcas Media download website and paste your
+                    download link to the input box above then click to the
+                    Download button.
+                  </p>
+                  <p>
+                    7、Wait for our server to do its job and then, save the
+                    video to your device.
+                  </p>
+                  <p>
+                    tips: It takes 2-10 seconds to download, please be patient.
+                    If nothing happened after 15 seconds, you can refresh the
+                    website and retry, or you can contact us
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer
+        class="text-center text-lg-start bg-body-tertiary text-muted flex-sm-column"
+      >
+        <!-- Section: Social media -->
+        <!-- <section
+          class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+        > -->
+        <!-- Left -->
+        <!-- <div class="me-5 d-none d-lg-block">
+            <span>Get connected with us if any question or suggestion:</span>
+          </div> -->
+        <!-- Left -->
+        <!-- Section: Links  -->
+        <section class="">
+          <div class="container text-center">
+            <!-- Grid row -->
+            <div class="row mt-3">
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
+                <!-- Content -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>Social Media Downloader
+                </h6>
+                <p>
+                  Simply paste the sharing link, preview the content, and then
+                  download it hassle-free.
+                </p>
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                <p>
+                  <i class="fas fa-envelope me-3"></i>
+                  im.victorzh@gmail.com
+                </p>
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <!-- <div
+          class="text-center p-4"
+          style="background-color: rgba(0, 0, 0, 0.05)"
+        >
+          © 2024 Copyright:
+          <a class="text-reset fw-bold">Media Downloader</a>
+        </div> -->
+        <!-- Copyright -->
+      </footer>
+    </div>
+  </body>
+</html>

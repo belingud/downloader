@@ -1,0 +1,100 @@
+/* 按钮文字居中 */
+.btn-text-center {
+  justify-content: center;
+  align-items: center;
+}
+
+/* 设置HTML和body的高度为视口的100% */
+html,
+body {
+  height: 100%;
+  margin: 0; /* 移除默认的margin */
+}
+body {
+  /* padding: 0; */
+  font-family: monospace;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* height: 100vh; */
+  /* margin: 0; */
+  /* background-color: #dfdbe5; */
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 40h-5v-2h5v-4.13a4 4 0 1 1 2 0V54h5v2h-5v15.95A10 10 0 0 0 63.66 67l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 71.95V56zm-39 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm40-40a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM15 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm40 40a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'%3E%3C/path%3E%3C/svg%3E"); */
+  /* flex-direction: column; */
+}
+
+#total {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center; 
+  /* flex: 1; */
+}
+header {
+  height: 60px;
+  /* margin-bottom: 10px; */
+}
+footer {
+  height: 150px;
+}
+
+/* 动态为footer添加类fixed-bottom */
+.fixed-bottom {
+  position: flex;
+  bottom: 0;
+  /* 确保footer的高度不会导致滚动条出现 */
+  height: auto;
+}
+
+#main {
+  display: flex;
+  /* flex-direction: column; 垂直排列子元素 */
+  /* justify-content: center; 水平居中 */
+  align-items: center;
+  flex: 1; /* 使#main占据剩余空间 */
+  overflow: auto; /* 如果内容超出，则显示滚动条 */
+  /* margin-bottom: auto; */
+  /* margin-bottom:-100px; */
+  /* min-height: calc(100vh - 220px); */
+  min-height: 60vh;
+  min-width: 100%;
+}
+
+/* PC端和移动端的布局区分 */
+@media (min-width: 769px) {
+  /* 搜索框样式，居中显示 */
+  .search-container {
+    display: flex;
+    justify-content: center; /*水平居中*/
+    align-items: center; /*垂直居中*/
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
+
+  /* 结果框初始隐藏，显示后根据内容自动调整高度 */
+  .result-container {
+    display: none;
+    overflow: auto;
+    justify-content: center;  /* 水平居中 */
+    /* align-items: center; 垂直居中 */
+    width: 30%;
+    flex: 1;
+  }
+
+  .info-container {
+    display: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 移动端的样式，搜索框和结果框上下布局 */
+  .search-container {
+    height: auto; /* 根据内容自动调整高度 */
+    width: 100%;
+  }
+  .result-container {
+    display: none;
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "parcel",
+  "description": "Include Bootstrap's source Sass and individual JavaScript plugins with Parcel.",
+  "version": "0.0.0",
+  "private": true,
+  "repository": "twbs/examples",
+  "license": "MIT",
+  "stackblitz": {
+    "startCommand": "npm start"
+  },
+  "scripts": {
+    "start:web": "webpack serve --mode development",
+    "dev": "parcel serve src/index.html --port 8080",
+    "build": "parcel build src/index.html --public-url / --dist-dir dist",
+    "build:web": "webpack build --mode production",
+    "test": "npm run build"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "hls.js": "^1.5.8",
+    "http-proxy-middleware": "^3.0.0"
+  },
+  "devDependencies": {
+    "@parcel/core": "^2.12.0",
+    "@parcel/transformer-sass": "2.10.3",
+    "autoprefixer": "^10.4.19",
+    "babel-types": "^6.26.0",
+    "css-loader": "^7.1.1",
+    "dotenv-webpack": "^8.1.0",
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "parcel": "2.10.3",
+    "parcel-bundler": "^1.12.5",
+    "parcel-proxy-server": "^1.1.0",
+    "postcss": "^8.4.38",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.76.0",
+    "sass-loader": "^14.2.1",
+    "serve-static": "^1.15.0",
+    "style-loader": "^4.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "not dead"
+    ],
+    "modern": [
+      "last 1 chrome version",
+      "last 1 firefox version"
+    ],
+    "ssr": [
+      "node 12"
+    ]
+  }
+}
