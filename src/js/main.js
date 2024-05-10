@@ -48,7 +48,7 @@ goButton.addEventListener("click", function (event) {
     minimal: true,
   };
   const query = new URLSearchParams(params).toString();
-  const url = `${BACKEND}/api/hyperparse?${query}`;
+  const url = `${BACKEND}/hyperparse?${query}`;
   fetch(url, {
     method: "GET",
     headers: corsHeaders,
