@@ -5,7 +5,7 @@
 console.log(process.env.API_HOST);
 const PROXY_HOST = 'https://proxy.im-victor.workers.dev';
 const BACKEND = 'https://toolkit.lte.ink:8000';
-corsHeaders = {
+let corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
 };
@@ -64,7 +64,6 @@ goButton.addEventListener("click", function (event) {
     })
     .then((data) => {
       console.log("second then: ", data);
-      console.log("data: ", JSON.stringify(data));
       displayResults(data);
     })
     .catch((error) => {
