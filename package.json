@@ -56,5 +56,6 @@
     "ssr": [
       "node 12"
     ]
-  }
+  },
+  "packageManager": "yarn@4.2.1"
 }
