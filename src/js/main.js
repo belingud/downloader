@@ -44,7 +44,7 @@ goButton.addEventListener("click", function (event) {
   }
   // 发送请求的示例，这里需要替换为实际的请求逻辑
   const params = {
-    url: document.getElementById("searchStr").value,
+    target: document.getElementById("searchStr").value,
     minimal: true,
   };
   const query = new URLSearchParams(params).toString();

@@ -8,7 +8,6 @@ const {
   loggerPlugin,
 } = require("http-proxy-middleware");
 
-
 const pathFilter = function (path, req) {
   return path.match("^/api");
 };
