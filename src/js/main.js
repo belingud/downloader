@@ -44,7 +44,7 @@ goButton.addEventListener("click", function (event) {
   }
   // 发送请求的示例，这里需要替换为实际的请求逻辑
   const params = {
-    target: document.getElementById("searchStr").value,
+    url: document.getElementById("searchStr").value,
     minimal: true,
   };
   const query = new URLSearchParams(params).toString();
@@ -133,7 +133,7 @@ function displayResults(data) {
     // const videoUrl = `https://proxy.im-victor.workers.dev/?url=${data.nwm_video_url_HQ}`;
     const videoUrl = `${PROXY_HOST}/?${new URLSearchParams(
       {
-        url: data.nwm_video_url_HQ,
+        target: data.nwm_video_url_HQ,
       }
     ).toString()}`;
     // 设置下载的文件名
