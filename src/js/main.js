@@ -3,8 +3,11 @@
 // import { Popover } from "./bootstrap.bundle.min";
 
 console.log(process.env.API_HOST);
-const PROXY_HOST = 'https://proxy.im-victor.workers.dev';
-const BACKEND = 'https://toolkit.lte.ink:8000';
+// const PROXY_HOST = 'https://proxy.im-victor.workers.dev';
+// const BACKEND = 'https://toolkit.lte.ink:8000';
+console.log('PROXY_HOST', process.env.PROXY_HOST);
+const PROXY_HOST = process.env.PROXY_HOST || "https://proxy.im-victor.workers.dev";
+const BACKEND = process.env.BACKEND || "https://toolkit.lte.ink:8000";
 let corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
