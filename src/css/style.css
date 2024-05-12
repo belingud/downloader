@@ -24,9 +24,11 @@ body {
 
 #total {
   display: flex;
+  /* 子元素垂直排列 */
   flex-direction: column;
   min-height: 100vh;
-  justify-content: center; 
+  /* 水平居中 */
+  justify-content: center;
   /* flex: 1; */
 }
 header {
@@ -38,24 +40,25 @@ footer {
 }
 
 /* 动态为footer添加类fixed-bottom */
-.fixed-bottom {
+/* .fixed-bottom {
   position: flex;
   bottom: 0;
-  /* 确保footer的高度不会导致滚动条出现 */
   height: auto;
-}
+} */
 
 #main {
   display: flex;
-  /* flex-direction: column; 垂直排列子元素 */
-  /* justify-content: center; 水平居中 */
+  /* 垂直排列子元素 */
+  flex-direction: column;
+  justify-content: center; /**水平居中*/
   align-items: center;
-  flex: 1; /* 使#main占据剩余空间 */
+  /* 使#main占据剩余空间 */
+  flex: 1;
   overflow: auto; /* 如果内容超出，则显示滚动条 */
   /* margin-bottom: auto; */
   /* margin-bottom:-100px; */
   /* min-height: calc(100vh - 220px); */
-  min-height: 60vh;
+  min-height: 30vh;
   min-width: 100%;
 }
 
@@ -63,28 +66,31 @@ footer {
 @media (min-width: 769px) {
   /* 搜索框样式，居中显示 */
   .search-container {
-    display: flex;
+    /* display: flex; */
     justify-content: center; /*水平居中*/
-    align-items: center; /*垂直居中*/
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    flex: 1;
+    /* 垂直居中 */
+    /* align-items: center; */
+    /* text-align: center; */
+    min-width: 100vh;
+    min-height: 25vh;
+    /* height: auto; */
+    /* flex: 1; */
   }
 
   /* 结果框初始隐藏，显示后根据内容自动调整高度 */
-  .result-container {
+  #resultContainer {
     display: none;
-    overflow: auto;
-    justify-content: center;  /* 水平居中 */
+    /* overflow: auto; */
+    /* justify-content: center;  水平居中 */
     /* align-items: center; 垂直居中 */
-    width: 30%;
-    flex: 1;
+    max-width: 80vh;
+    min-width: 60vh;
+    /* flex: 1; */
   }
 
   .info-container {
     display: none;
-    width: 100%;
+    /* width: 100%; */
   }
 }
 

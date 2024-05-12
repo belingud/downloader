@@ -79,7 +79,7 @@ goButton.addEventListener("click", function (event) {
 
 function displayResults(data) {
   // 显示结果容器
-  let resultContainer = document.querySelector(".result-container");
+  let resultContainer = document.getElementById("resultContainer");
   // 移动搜索框到左侧（如果需要）
   let searchContainer = document.querySelector(".search-container");
   resultContainer.style.display = "flex";
@@ -93,7 +93,6 @@ function displayResults(data) {
   //   resultContainer.style.width = "100%";
   //   resultContainer.style.marginLeft = "0"; // 重置为默认值
   // }
-
   // 将视频播放信息添加到video-container
   let resultCardBody = document.getElementById("resultCardBody");
 
