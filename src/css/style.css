@@ -62,6 +62,10 @@ footer {
   min-width: 100%;
 }
 
+.toast {
+  align-items: center;
+}
+
 /* PC端和移动端的布局区分 */
 @media (min-width: 769px) {
   /* 搜索框样式，居中显示 */
@@ -92,6 +96,12 @@ footer {
     display: none;
     /* width: 100%; */
   }
+
+  .toast-style {
+    height: 50px;
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
 
 @media (max-width: 768px) {
@@ -102,5 +112,10 @@ footer {
   }
   .result-container {
     display: none;
+  }
+  .toast-style {
+    height: 10px;
+    display: table-cell;
+    vertical-align: middle;
   }
 }

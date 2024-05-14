@@ -1,16 +1,27 @@
 // import "../scss/styles.scss";
 // Import only the Bootstrap components we need
-// import { Popover } from "./bootstrap.bundle.min";
+// import { Alert } from "./bootstrap.bundle.min";
+// import './bootstrap.min.js';
+import { Toast } from 'bootstrap';
 
 console.log(process.env.API_HOST);
-// const PROXY_HOST = 'https://proxy.im-victor.workers.dev';
+// const PROXY_BASE = 'https://proxy.im-victor.workers.dev';
 // const BACKEND = 'https://toolkit.lte.ink:8000';
-console.log('PROXY_HOST', process.env.PROXY_HOST);
-const PROXY_HOST = process.env.PROXY_HOST || "https://proxy.im-victor.workers.dev";
+console.log("PROXY_BASE", process.env.PROXY_BASE);
+const PROXY_BASE =
+  process.env.PROXY_BASE || "https://proxy.im-victor.workers.dev";
 const BACKEND = process.env.BACKEND || "https://toolkit.lte.ink:8000";
 let corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
+};
+
+const XHRStatus = {
+  UNSENT: 0, // 初始状态
+  OPENED: 1, // open 被调用
+  HEADERS_RECEIVED: 2, // 接收到 response header
+  LOADING: 3, // 响应正在被加载（接收到一个数据包）
+  DONE: 4, // 请求完成
 };
 // 平台dropdown 添加点击事件
 // 获取下拉按钮和下拉菜单项
@@ -83,16 +94,6 @@ function displayResults(data) {
   // 移动搜索框到左侧（如果需要）
   let searchContainer = document.querySelector(".search-container");
   resultContainer.style.display = "flex";
-  // 根据屏幕宽度调整布局，查询container和结果container的左右排布
-  // if (window.innerWidth >= 769) {
-  //   // PC端布局
-  //   searchContainer.style.width = "70vh";
-  //   resultContainer.style.width = "30vh";
-  // } else {
-  //   // 移动端布局
-  //   resultContainer.style.width = "100%";
-  //   resultContainer.style.marginLeft = "0"; // 重置为默认值
-  // }
   // 将视频播放信息添加到video-container
   let resultCardBody = document.getElementById("resultCardBody");
 
@@ -120,7 +121,7 @@ function displayResults(data) {
   // 添加下载按钮
   const buttonDiv = document.createElement("div");
   buttonDiv.setAttribute("class", "d-grid d-md-flex justify-content-md-end");
-  const downloadButton = document.createElement("a");
+  const downloadButton = document.createElement("button");
   downloadButton.setAttribute(
     "class",
     "d-grid gap-2 d-md-flex btn btn-primary justify-content-md-end"
@@ -133,11 +134,9 @@ function displayResults(data) {
   downloadButton.addEventListener("click", function () {
     // 假设您已经有了一个视频URL
     // const videoUrl = `https://proxy.im-victor.workers.dev/?url=${data.nwm_video_url_HQ}`;
-    const videoUrl = `${PROXY_HOST}/?${new URLSearchParams(
-      {
-        target: data.nwm_video_url_HQ,
-      }
-    ).toString()}`;
+    const videoUrl = `${PROXY_BASE}/?${new URLSearchParams({
+      target: data.nwm_video_url_HQ,
+    }).toString()}`;
     // 设置下载的文件名
     const filename = `Orcas-${data.nickname}-${data.aweme_id}`;
     console.log(`start to download file: ${videoUrl}, ${filename}`);
@@ -155,26 +154,123 @@ function displayResults(data) {
   ]);
 }
 
+function showDownloadSuccessToast() {
+  let successTElement = document.getElementById("successToast");
+  let successToast = new Toast(successTElement);
+  // let successToastBody = document.getElementById("successToastBody");
+  // successToastBody.innerHTML = "Download success.";
+  successToast.show()
+}
+
+function showDownloadFailedToast() {
+  let errorTElement = document.getElementById("failedToast");
+  // errorTElement.innerText = `Download error.`;
+  let errorToast = new Toast(errorTElement);
+  errorToast.show()
+}
+
+// xhr下载状态监听的几个函数
+function buttonTransferStartListener(button) {
+  return function transferStart(event) {
+    console.log("The transfer is start.");
+    button.disabled = true;
+    button.innerText = "Downloading...";
+  }
+}
+
+function updateProgress(event) {
+  if (event.lengthComputable) {
+    const percentComplete = (event.loaded / event.total) * 100;
+    console.log("progress: ", percentComplete);
+  } else {
+    // Unable to compute progress information since the total size is unknown
+  }
+}
+
+function buttonTransferLoadendListener(button) {
+  let originalValue = button.innerText;
+  return function transferComplete(event) {
+    console.log("The transfer is loadend.");
+    button.disabled = false;
+    button.innerText = originalValue;
+  }
+}
+
+function buttonTransferErrorListener(button) {
+  let originalValue = button.innerText;
+  return function transferError(event) {
+    console.log("The transfer is error.");
+    button.disabled = false;
+    button.innerText = originalValue;
+    showDownloadFailedToast();
+  }
+}
+
+
 function downloadFile(url, filename) {
   // 创建一个隐藏的<a>元素，用于模拟下载点击
   const anchorElement = document.createElement("a");
   anchorElement.style.display = "none";
+  let xhr = new XMLHttpRequest();
+  xhr.timeout = 10000 * 1000;
+  let downloadButton = document.getElementById("downloadButton");
+  // xhr.addEventListener("open", buttonTransferStartListener(downloadButton));
+  xhr.addEventListener("progress", updateProgress);
+  xhr.addEventListener("loaded", buttonTransferLoadendListener(downloadButton));
+  xhr.addEventListener("error", buttonTransferErrorListener(downloadButton));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == XHRStatus.UNSENT) {
+      // 请求未发送
+      console.log("xhr UNSENT");
+    }
+    if (xhr.readyState == XHRStatus.OPENED) {
+      // 请求已打开
+      console.log("xhr OPENED");
+      
+      downloadButton.disabled = true;
+      downloadButton.innerText = "Downloading...";
+    }
+    if (xhr.readyState == XHRStatus.HEADERS_RECEIVED) {
+      // 请求头已接收
+      console.log("xhr HEADERS_RECEIVED");
+      console.log(`Content-Length: ${xhr.getResponseHeader('content-length')}`);
+    }
+    if (xhr.readyState == XHRStatus.LOADING) {
+      // 加载中
+      console.log("xhr LOADING");
+    }
+    if (xhr.readyState == XHRStatus.DONE) {
+      // 请求完成
+      console.log("xhr DONE");
+      downloadButton.disabled = false;
+      downloadButton.innerText = "Download";
+    }
+  };
+  xhr.onload = function () {
+    console.log("onload");
+    if (xhr.status >= 400) {
+      console.log("Download Failed");
+      showDownloadFailedToast();
+      return
+    }
+    let blob = xhr.response;
+    const fileType = xhr.getResponseHeader('content-type').split("/")[1];
+    anchorElement.href = URL.createObjectURL(blob);
+    anchorElement.download = filename + fileType;
+    document.body.appendChild(anchorElement);
 
-  fetch(url).then((response) => {
-    response.blob().then((blob) => {
-      const fileType = blob.type.split("/")[1];
-      anchorElement.href = URL.createObjectURL(blob);
-      anchorElement.download = filename + fileType;
-      document.body.appendChild(anchorElement);
+    // 模拟点击<a>元素以启动下载
+    anchorElement.click();
 
-      // 模拟点击<a>元素以启动下载
-      anchorElement.click();
+    // 清理DOM，移除<a>元素
+    document.body.removeChild(anchorElement);
 
-      // 清理DOM，移除<a>元素
-      document.body.removeChild(anchorElement);
-
-      // 释放blob URL
-      URL.revokeObjectURL(anchorElement.href);
-    });
-  });
+    // 释放blob URL
+    URL.revokeObjectURL(anchorElement.href);
+    showDownloadSuccessToast();
+  }
+  xhr.open("GET", url);
+  console.log("OPENED", xhr.readyState);
+  xhr.responseType = "blob";
+  xhr.send();
 }
