@@ -62,8 +62,15 @@ goButton.addEventListener("click", function (event) {
     minimal: true,
   };
   const query = new URLSearchParams(params).toString();
-  const url = `${BACKEND}/hyperparse?${query}`;
-  fetch(url, {
+  const target = `${BACKEND}/hyperparse?${query}`;
+  const url = new URL(PROXY_BASE)
+  const proxyQuery = new URLSearchParams({
+    target: target,
+  })
+  url.search = proxyQuery.toString();
+  console.log("url: ", url);
+  console.log("target: ", target);
+  fetch(target, {
     method: "GET",
     headers: corsHeaders,
     mode: "cors",
