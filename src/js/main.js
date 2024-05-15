@@ -95,18 +95,34 @@ goButton.addEventListener("click", function (event) {
     });
 });
 
+/**
+ * 根据查询的响应展示返回的结果
+ * @param {object} data 
+ */
 function displayResults(data) {
   // 显示结果容器
   let resultContainer = document.getElementById("resultContainer");
   // 移动搜索框到左侧（如果需要）
   let searchContainer = document.querySelector(".search-container");
   resultContainer.style.display = "flex";
-  // 将视频播放信息添加到video-container
-  let resultCardBody = document.getElementById("resultCardBody");
 
   // 将视频标题添加到card-header
   let resultCardHeader = document.getElementById("resultCardHeader");
   resultCardHeader.innerHTML = `<span>${data.desc}</span>`;
+  if (data.type == "video") {
+    displatViedeoResult(data);
+  } else if (data.type == "image") {
+    displayImageResult(data);
+  }
+}
+
+/**
+ * 展示类型是视频的结果
+ * @param {object} data 
+ */
+function displatViedeoResult(data) {
+  // 将视频播放信息添加到video-container
+  let resultCardBody = document.getElementById("resultCardBody");
 
   let videoEle = document.createElement("video");
   videoEle.innerHTML = "";
@@ -127,7 +143,7 @@ function displayResults(data) {
 
   // 添加下载按钮
   const buttonDiv = document.createElement("div");
-  buttonDiv.setAttribute("class", "d-grid d-md-flex justify-content-md-end");
+  buttonDiv.setAttribute("class", "d-grid d-md-flex justify-content-md-end mt-3");
   const downloadButton = document.createElement("button");
   downloadButton.setAttribute(
     "class",
@@ -141,24 +157,39 @@ function displayResults(data) {
   downloadButton.addEventListener("click", function () {
     // 假设您已经有了一个视频URL
     // const videoUrl = `https://proxy.im-victor.workers.dev/?url=${data.nwm_video_url_HQ}`;
-    const videoUrl = `${PROXY_BASE}/?${new URLSearchParams({
-      target: data.nwm_video_url_HQ,
-    }).toString()}`;
+    const query = new URLSearchParams({
+      target: data.nwm_video_url_HQ
+    }).toString();
+    const videoUrl = `${PROXY_BASE}/?${query}`;
     // 设置下载的文件名
     const filename = `Orcas-${data.nickname}-${data.aweme_id}`;
     console.log(`start to download file: ${videoUrl}, ${filename}`);
     // 调用下载方法
     downloadFile(videoUrl, filename);
   });
+}
 
-  // 将结果信息添加到info-container
-  let infoContainer = document.querySelector(".info-container");
-  let table = document.getElementById("result-info");
-  const tableRowsMap = new Map([
-    ["description", ""],
-    ["video with watermark"],
-    ["video without watermark"],
-  ]);
+/**
+ * 展示类型是图片的结果
+ * @param {object} data 
+ */
+function displayImageResult(data) {
+  let resultCardBody = document.getElementById("resultCardBody");
+  resultCardBody.innerHTML = ""; // 清空容器内容
+  resultCardBody.classList.add("d-flex", "align-items-center", "m-3");
+  let imageList = data.no_watermark_image_list;
+  for (let i = 0; i < imageList.length; i++) {
+    // div包裹img
+    let imageDiv = document.createElement("div");
+    imageDiv.classList.add("col-md-12", "col-lg-6", "px-2", "mb-3");
+    const imageEle = document.createElement("img");
+    imageEle.setAttribute("src", imageList[i]);
+    imageEle.setAttribute("width", "100%");
+    imageDiv.appendChild(imageEle);
+    // card body包裹多个img的div
+    resultCardBody.appendChild(imageDiv);
+  }
+  resultCardBody.appendChild(imageDiv);
 }
 
 function showDownloadSuccessToast() {
