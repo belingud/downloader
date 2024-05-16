@@ -1696,7 +1696,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/config-default@npm:2.12.0":
+"@parcel/config-default@npm:2.12.0, @parcel/config-default@npm:^2.12.0":
   version: 2.12.0
   resolution: "@parcel/config-default@npm:2.12.0"
   dependencies:
@@ -2011,6 +2011,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@parcel/packager-raw-url@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@parcel/packager-raw-url@npm:2.12.0"
+  dependencies:
+    "@parcel/plugin": "npm:2.12.0"
+    "@parcel/utils": "npm:2.12.0"
+  checksum: 10c0/e519363dab0c8ae1b7b33552bd4cb2d5fc966b1ed5822e965ea46ade340b627ba82983b2e99c9c191095c982ed35efa9c106eec6619e11457bb518bec4acaa28
+  languageName: node
+  linkType: hard
+
 "@parcel/packager-raw@npm:2.12.0":
   version: 2.12.0
   resolution: "@parcel/packager-raw@npm:2.12.0"
@@ -2038,6 +2048,18 @@ __metadata:
   dependencies:
     "@parcel/plugin": "npm:2.12.0"
   checksum: 10c0/bd3ccd6f9a0506b26b0d708ded6cea3ac53df5c49426086b556ba7f9f1351aba010da3e0795a1f6944cdc306cffc08eed249bb8444aa4f44d9de0e3d1592810d
+  languageName: node
+  linkType: hard
+
+"@parcel/packager-xml@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@parcel/packager-xml@npm:2.12.0"
+  dependencies:
+    "@parcel/plugin": "npm:2.12.0"
+    "@parcel/types": "npm:2.12.0"
+    "@parcel/utils": "npm:2.12.0"
+    "@xmldom/xmldom": "npm:^0.7.9"
+  checksum: 10c0/8668a43b0d612eafb314cbf56692e2dd5fe8d2378de999c3af578f76b9ca255c8454805e463147dafef61a323408b3c28b1e58808617e1055be49600846ee7b8
   languageName: node
   linkType: hard
 
@@ -2335,6 +2357,28 @@ __metadata:
     posthtml-render: "npm:^3.0.0"
     semver: "npm:^7.5.2"
   checksum: 10c0/8916bdc0b36c60b32963e015c43a8bcd8cc2b15cc11b7611c49af6a4e4d63c2aabea0aa0fde31a78278eec25f88b52b3e56d8382dc2db5f3a401e63312115f3a
+  languageName: node
+  linkType: hard
+
+"@parcel/transformer-webmanifest@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@parcel/transformer-webmanifest@npm:2.12.0"
+  dependencies:
+    "@mischnic/json-sourcemap": "npm:^0.1.0"
+    "@parcel/diagnostic": "npm:2.12.0"
+    "@parcel/plugin": "npm:2.12.0"
+    "@parcel/utils": "npm:2.12.0"
+  checksum: 10c0/90b19325e997a3b073f35e8f8e093efbb3742bdd891610ba2eefa4f679b0eb19d1eb450713d5ec4cf9cf16faca04dc600b96d7323109028dd33ca33c4fa575f5
+  languageName: node
+  linkType: hard
+
+"@parcel/transformer-xml@npm:2.12.0":
+  version: 2.12.0
+  resolution: "@parcel/transformer-xml@npm:2.12.0"
+  dependencies:
+    "@parcel/plugin": "npm:2.12.0"
+    "@xmldom/xmldom": "npm:^0.7.9"
+  checksum: 10c0/dd7baf53699679768e1b306a01d6388ff0ad1f36bd3601697d20cbf4cddf916376db879def632a5425cfa2c28a7ce047b984164602a08492e6d48ebfaac93cf6
   languageName: node
   linkType: hard
 
@@ -3109,6 +3153,13 @@ __metadata:
     webpack-dev-server:
       optional: true
   checksum: 10c0/36079d34971ff99a58b66b13f4184dcdd8617853c48cccdbc3f9ab7ea9e5d4fcf504e873c298ea7aa15e0b51ad2c4aee4d7a70bd7d9364e60f57b0eb93ca15fc
+  languageName: node
+  linkType: hard
+
+"@xmldom/xmldom@npm:^0.7.9":
+  version: 0.7.13
+  resolution: "@xmldom/xmldom@npm:0.7.13"
+  checksum: 10c0/cb02e4e8d986acf18578a5f25d1bce5e18d08718f40d8a0cdd922a4c112c8e00daf94de4e43f9556ed147c696b135f2ab81fa9a2a8a0416f60af15d156b60e40
   languageName: node
   linkType: hard
 
@@ -9320,8 +9371,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "parcel@workspace:."
   dependencies:
+    "@parcel/config-default": "npm:^2.12.0"
     "@parcel/core": "npm:^2.12.0"
+    "@parcel/packager-raw-url": "npm:2.12.0"
+    "@parcel/packager-xml": "npm:2.12.0"
     "@parcel/transformer-sass": "npm:2.12.0"
+    "@parcel/transformer-webmanifest": "npm:2.12.0"
+    "@parcel/transformer-xml": "npm:2.12.0"
     "@popperjs/core": "npm:^2.11.8"
     autoprefixer: "npm:^10.4.19"
     babel-types: "npm:^6.26.0"
