@@ -4,6 +4,7 @@
 // import './bootstrap.min.js';
 import { Toast } from 'bootstrap';
 
+console.log('CF_PAGES_URL: ', process.env.CF_PAGES_URL);
 console.log(process.env.BACKEND);
 // const PROXY_BASE = 'https://proxy.im-victor.workers.dev';
 // const BACKEND = 'https://toolkit.lte.ink:8000';
