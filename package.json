@@ -11,7 +11,7 @@
   "scripts": {
     "start:web": "webpack serve --mode development",
     "dev": "parcel serve src/index.html --port 8080",
-    "build": "parcel build src/index.html --public-url / --dist-dir dist -target default --no-source-maps",
+    "build": "parcel build src/index.html --public-url / --dist-dir dist --no-source-maps",
     "build:web": "webpack build --mode production",
     "test": "npm run build"
   },
