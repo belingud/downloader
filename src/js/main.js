@@ -4,13 +4,13 @@
 // import './bootstrap.min.js';
 import { Toast } from 'bootstrap';
 
-console.log(process.env.API_HOST);
+console.log(process.env.BACKEND);
 // const PROXY_BASE = 'https://proxy.im-victor.workers.dev';
 // const BACKEND = 'https://toolkit.lte.ink:8000';
 console.log("PROXY_BASE", process.env.PROXY_BASE);
 const PROXY_BASE =
-  process.env.PROXY_BASE || "https://proxy.im-victor.workers.dev";
-const BACKEND = process.env.BACKEND || "https://toolkit.lte.ink:8000";
+  process.env.PROXY_BASE || "https://proxy.lte.ink";
+const BACKEND = process.env.BACKEND || "https://toolkit.lte.ink";
 let corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
