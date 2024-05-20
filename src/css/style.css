@@ -119,3 +119,15 @@ footer {
     vertical-align: middle;
   }
 }
+
+
+/* 退出提示框居中并浮在页面上方 */
+.alert-float {
+  /* display: none; */
+  position: absolute; /* 绝对定位 */
+  top: 10px; /* 距离页面顶部的距离 */
+  left: 50%; /* 距离页面左侧50% */
+  transform: translateX(-50%); /* 水平居中 */
+  width: 50%; /* 占据页面宽度的一半 */
+  z-index: 1050; /* 确保在其他内容之上 */
+}

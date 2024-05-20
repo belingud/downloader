@@ -9391,11 +9391,14 @@ __metadata:
     parcel: "npm:2.12.0"
     parcel-bundler: "npm:^1.12.5"
     parcel-proxy-server: "npm:^1.1.0"
+    path-browserify: "npm:^1.0.0"
     postcss: "npm:^8.4.38"
     postcss-loader: "npm:^8.1.1"
+    process: "npm:^0.11.10"
     sass: "npm:^1.77.0"
     sass-loader: "npm:^14.2.1"
     serve-static: "npm:^1.15.0"
+    streamsaver: "npm:^2.0.6"
     style-loader: "npm:^4.0.0"
     url-loader: "npm:^4.1.1"
     webpack: "npm:^5.91.0"
@@ -9493,6 +9496,13 @@ __metadata:
   version: 0.0.1
   resolution: "path-browserify@npm:0.0.1"
   checksum: 10c0/3d59710cddeea06509d91935196185900f3d9d29376dff68ff0e146fbd41d0fb304e983d0158f30cabe4dd2ffcc6a7d3d977631994ee984c88e66aed50a1ccd3
+  languageName: node
+  linkType: hard
+
+"path-browserify@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "path-browserify@npm:1.0.1"
+  checksum: 10c0/8b8c3fd5c66bd340272180590ae4ff139769e9ab79522e2eb82e3d571a89b8117c04147f65ad066dccfb42fcad902e5b7d794b3d35e0fd840491a8ddbedf8c66
   languageName: node
   linkType: hard
 
@@ -11582,6 +11592,13 @@ __metadata:
     to-arraybuffer: "npm:^1.0.0"
     xtend: "npm:^4.0.0"
   checksum: 10c0/fbe7d327a29216bbabe88d3819bb8f7a502f11eeacf3212579e5af1f76fa7283f6ffa66134ab7d80928070051f571d1029e85f65ce3369fffd4c4df3669446c4
+  languageName: node
+  linkType: hard
+
+"streamsaver@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "streamsaver@npm:2.0.6"
+  checksum: 10c0/824ed3099a1a973f7c9622e2e6dbb760b9e635fd3af333ef75c1097308186c7bba3360be886eff3905972dac6a863d1f95101d23f500f720fd00e863ce4d1073
   languageName: node
   linkType: hard
 
