@@ -4,8 +4,6 @@
 // import './bootstrap.min.js';
 import { Toast, Alert } from "bootstrap";
 import streamSaver from "streamsaver";
-import path from "path";
-import fs from "fs";
 
 console.log("CF_PAGES_URL: ", process.env.CF_PAGES_URL);
 console.log(process.env.BACKEND);
@@ -46,6 +44,19 @@ dropdownItems.forEach(function (item) {
 // GO按钮绑定点击事件
 const goButton = document.getElementById("goButton");
 
+function setButtonLoading(button, isLoading) {
+    if (isLoading) {
+        button.disabled = true;
+        button.innerHTML = `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      `;
+    } else {
+        button.disabled = false;
+        button.innerHTML = "Download";
+    }
+}
+
 goButton.addEventListener("click", function (event) {
     // 阻止表单默认提交行为
     event.preventDefault();
@@ -74,6 +85,10 @@ goButton.addEventListener("click", function (event) {
     url.search = proxyQuery.toString();
     console.log("url: ", url);
     console.log("target: ", target);
+    const goButton = document.getElementById("goButton");
+    setButtonLoading(true);
+
+    setButtonLoading(true);
     fetch(target, {
         method: "GET",
         headers: corsHeaders,
@@ -83,19 +98,23 @@ goButton.addEventListener("click", function (event) {
             if (!response.ok) {
                 const errResp = await response.text();
                 console.log("first then errResp: ", errResp);
+                setButtonLoading(false);
                 throw new Error(errResp);
             }
+            setButtonLoading(false);
             return response.json();
         })
         .then((data) => {
             console.log("second then: ", data);
             displayResults(data);
+            setButtonLoading(false);
         })
         .catch((error) => {
             console.error(
                 "There has been a problem with your fetch operation:",
                 error
             );
+            setButtonLoading(false);
         });
 });
 
@@ -188,8 +207,11 @@ function displatViedeoResult(data) {
 
 let activeDownloads = 0;
 function downloadByStream(url, filenameWithSuffix) {
+    const downloadButton = document.getElementById("downloadButton");
+    setButtonLoading(downloadButton, true);
     fetch(url).then((response) => {
         if (!response.ok) {
+            setButtonLoading(downloadButton, false);
             throw new Error("Network response was not ok");
         }
         activeDownloads++;
@@ -211,15 +233,18 @@ function downloadByStream(url, filenameWithSuffix) {
                         () => {
                             activeDownloads--;
                             console.log("Downloaded", filename);
+                            setButtonLoading(downloadButton, false);
                         },
                         (err) => {
                             console.error("Download error:", err);
                             activeDownloads--;
+                            setButtonLoading(downloadButton, false);
                         }
                     )
                     .catch((err) => {
                         console.error("Download error:", err);
                         activeDownloads--;
+                        setButtonLoading(downloadButton, false);
                     });
             }
             const writer = fileStream.getWriter();
@@ -251,9 +276,11 @@ function downloadByStream(url, filenameWithSuffix) {
                 }
             };
             pump();
+            setButtonLoading(downloadButton, false);
         } catch (err) {
             console.error("Download error:", err);
             activeDownloads--;
+            setButtonLoading(downloadButton, false);
         }
     });
 }
@@ -440,16 +467,16 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 function log2localStorage(message) {
-  const logKey = 'runtimeLogs';
+    const logKey = "runtimeLogs";
 
-  // 构造日志内容
-  const timestamp = new Date().toISOString();
-  const logMessage = `${timestamp}: ${message}\n`;
+    // 构造日志内容
+    const timestamp = new Date().toISOString();
+    const logMessage = `${timestamp}: ${message}\n`;
 
-  // 从 localStorage 中获取已有的日志数据（如果有）
-  let existingLogs = localStorage.getItem(logKey);
-  existingLogs = existingLogs ? existingLogs + logMessage : logMessage;
+    // 从 localStorage 中获取已有的日志数据（如果有）
+    let existingLogs = localStorage.getItem(logKey);
+    existingLogs = existingLogs ? existingLogs + logMessage : logMessage;
 
-  // 将新的日志数据保存到 localStorage 中
-  localStorage.setItem(logKey, existingLogs);
+    // 将新的日志数据保存到 localStorage 中
+    localStorage.setItem(logKey, existingLogs);
 }
