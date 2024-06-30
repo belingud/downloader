@@ -81,9 +81,9 @@ goButton.addEventListener("click", function (event) {
     })
         .then(async (response) => {
             if (!response.ok) {
-                const errResp = await response.json();
+                const errResp = await response.text();
                 console.log("first then errResp: ", errResp);
-                throw new Error(JSON.stringify(errResp));
+                throw new Error(errResp);
             }
             return response.json();
         })
