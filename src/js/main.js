@@ -132,7 +132,7 @@ function displatViedeoResult(data) {
     videoEle.innerHTML = "";
     videoEle.setAttribute("width", "100%");
     videoEle.setAttribute("height", "400px");
-    videoEle.setAttribute("crossorigin", "anonymous");
+    // videoEle.setAttribute("crossorigin", "anonymous");
     videoEle.setAttribute("controls", "controls"); // 这将添加默认的控件
     videoEle.setAttribute("id", "videoElement"); // 这将添加默认的控件
 
