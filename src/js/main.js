@@ -76,8 +76,8 @@ goButton.addEventListener("click", function (event) {
     console.log("target: ", target);
     fetch(target, {
         method: "GET",
-        // headers: corsHeaders,
-        mode: "no-cors",
+        headers: corsHeaders,
+        mode: "cors",
     })
         .then(async (response) => {
             if (!response.ok) {
