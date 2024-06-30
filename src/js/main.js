@@ -86,9 +86,8 @@ goButton.addEventListener("click", function (event) {
     console.log("url: ", url);
     console.log("target: ", target);
     const goButton = document.getElementById("goButton");
-    setButtonLoading(true);
+    setButtonLoading(goButton, true);
 
-    setButtonLoading(true);
     fetch(target, {
         method: "GET",
         headers: corsHeaders,
@@ -101,20 +100,20 @@ goButton.addEventListener("click", function (event) {
                 setButtonLoading(false);
                 throw new Error(errResp);
             }
-            setButtonLoading(false);
+            setButtonLoading(goButton, false);
             return response.json();
         })
         .then((data) => {
             console.log("second then: ", data);
             displayResults(data);
-            setButtonLoading(false);
+            setButtonLoading(goButton, false);
         })
         .catch((error) => {
             console.error(
                 "There has been a problem with your fetch operation:",
                 error
             );
-            setButtonLoading(false);
+            setButtonLoading(goButton, false);
         });
 });
 
