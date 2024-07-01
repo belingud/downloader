@@ -139,18 +139,18 @@ function displayResults(data) {
     let videos = [];
     let imgs = [];
     if (data.type == "video") {
-        for (url of data.nwm_video_url_HQ_list) {
+        for (let url of (data.nwm_video_url_HQ_list || [])) {
             videos.push({ type: "video", url: url });
         }
     } else if (data.type == "image") {
-        for (url of data.no_watermark_image_list) {
+        for (let url of (data.no_watermark_image_list || [])) {
             imgs.push({ type: "image", url: url });
         }
     } else if (data.type == "hybrid") {
-        for (url of data.nwm_video_url_HQ_list) {
+        for (let url of (data.nwm_video_url_HQ_list || [])) {
             videos.push({ type: "video", url: url });
         }
-        for (url of data.no_watermark_image_list) {
+        for (let url of (data.no_watermark_image_list || [])) {
             imgs.push({ type: "image", url: url });
         }
     }
