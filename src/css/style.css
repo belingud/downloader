@@ -124,10 +124,24 @@ footer {
 /* 退出提示框居中并浮在页面上方 */
 .alert-float {
   /* display: none; */
-  position: absolute; /* 绝对定位 */
+  position: absolute;
   top: 10px; /* 距离页面顶部的距离 */
   left: 50%; /* 距离页面左侧50% */
   transform: translateX(-50%); /* 水平居中 */
   width: 50%; /* 占据页面宽度的一半 */
   z-index: 1050; /* 确保在其他内容之上 */
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

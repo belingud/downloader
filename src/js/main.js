@@ -45,6 +45,9 @@ dropdownItems.forEach(function (item) {
 const goButton = document.getElementById("goButton");
 
 function setButtonLoading(button, isLoading) {
+    if (!button) {
+        return;
+    }
     if (isLoading) {
         button.disabled = true;
         button.innerHTML = `
@@ -131,18 +134,39 @@ function displayResults(data) {
     // 将视频标题添加到card-header
     let resultCardHeader = document.getElementById("resultCardHeader");
     resultCardHeader.innerHTML = `<span>${data.desc}</span>`;
+    let resultCardBody = document.getElementById("resultCardBody");
+    resultCardBody.innerHTML = "";
+    let videos = [];
+    let imgs = [];
     if (data.type == "video") {
-        displatViedeoResult(data);
+        for (url of data.nwm_video_url_HQ_list) {
+            videos.push({ type: "video", url: url });
+        }
     } else if (data.type == "image") {
-        displayImageResult(data);
+        for (url of data.no_watermark_image_list) {
+            imgs.push({ type: "image", url: url });
+        }
+    } else if (data.type == "hybrid") {
+        for (url of data.nwm_video_url_HQ_list) {
+            videos.push({ type: "video", url: url });
+        }
+        for (url of data.no_watermark_image_list) {
+            imgs.push({ type: "image", url: url });
+        }
     }
+    for (let i = 0; i < videos.length; i++) {
+        if (videos[i].type == "video") {
+            displatViedeoResult(videos[i], i);
+        }
+    }
+    displayImageResult(imgs);
 }
 
 /**
  * 展示类型是视频的结果
  * @param {object} data
  */
-function displatViedeoResult(data) {
+function displatViedeoResult(data, index = 0) {
     // 将视频播放信息添加到video-container
     let resultCardBody = document.getElementById("resultCardBody");
 
@@ -152,16 +176,16 @@ function displatViedeoResult(data) {
     videoEle.setAttribute("height", "400px");
     // videoEle.setAttribute("crossorigin", "anonymous");
     videoEle.setAttribute("controls", "controls"); // 这将添加默认的控件
-    videoEle.setAttribute("id", "videoElement"); // 这将添加默认的控件
+    // videoEle.setAttribute("id", "videoElement");
 
     // 为video标签添加视频源
     let sourceEle = document.createElement("source");
-    sourceEle.setAttribute("src", data.nwm_video_url);
+    sourceEle.setAttribute("src", data.url);
     sourceEle.setAttribute("type", "video/mp4");
     videoEle.appendChild(sourceEle);
 
     // 将video标签添加到card-body
-    resultCardBody.innerHTML = ""; // 清空容器内容
+    // resultCardBody.innerHTML = ""; // 清空容器内容
     resultCardBody.appendChild(videoEle);
 
     // 添加下载按钮
@@ -175,18 +199,18 @@ function displatViedeoResult(data) {
         "class",
         "d-grid gap-2 d-md-flex btn btn-primary justify-content-md-end"
     );
-    downloadButton.setAttribute("id", "downloadButton");
+    // downloadButton.setAttribute("id", `downloadButton${index}`);
     downloadButton.innerHTML = "Download";
     buttonDiv.appendChild(downloadButton);
     resultCardBody.appendChild(buttonDiv);
     downloadButton.addEventListener("click", function () {
         const query = new URLSearchParams({
-            target: data.nwm_video_url_HQ,
+            target: data.url,
         }).toString();
         const videoUrl = `${PROXY_BASE}/?${query}`;
-        const filenameWithSuffix = `Orcas-${data.nickname}-${data.aweme_id}`;
+        const filenameWithSuffix = `Orcas-${data.nickname}-${data.aweme_id}-${index}`;
         // 发起请求获取大文件流
-        downloadByStream(videoUrl, filenameWithSuffix);
+        downloadByStream(videoUrl, filenameWithSuffix, downloadButton);
     });
 
     // downloadButton.addEventListener("click", function () {
@@ -205,9 +229,8 @@ function displatViedeoResult(data) {
 }
 
 let activeDownloads = 0;
-function downloadByStream(url, filenameWithSuffix) {
-    const downloadButton = document.getElementById("downloadButton");
-    setButtonLoading(downloadButton, true);
+function downloadByStream(url, filenameWithSuffix, button) {
+    setButtonLoading(button, true);
     fetch(url).then((response) => {
         if (!response.ok) {
             setButtonLoading(downloadButton, false);
@@ -232,18 +255,18 @@ function downloadByStream(url, filenameWithSuffix) {
                         () => {
                             activeDownloads--;
                             console.log("Downloaded", filename);
-                            setButtonLoading(downloadButton, false);
+                            setButtonLoading(button, false);
                         },
                         (err) => {
                             console.error("Download error:", err);
                             activeDownloads--;
-                            setButtonLoading(downloadButton, false);
+                            setButtonLoading(button, false);
                         }
                     )
                     .catch((err) => {
                         console.error("Download error:", err);
                         activeDownloads--;
-                        setButtonLoading(downloadButton, false);
+                        setButtonLoading(button, false);
                     });
             }
             const writer = fileStream.getWriter();
@@ -275,36 +298,36 @@ function downloadByStream(url, filenameWithSuffix) {
                 }
             };
             pump();
-            setButtonLoading(downloadButton, false);
+            setButtonLoading(button, false);
         } catch (err) {
             console.error("Download error:", err);
             activeDownloads--;
-            setButtonLoading(downloadButton, false);
+            setButtonLoading(button, false);
         }
     });
 }
 
 /**
  * 展示类型是图片的结果
- * @param {object} data
+ * @param {object} imageList no_watermark_image_list
  */
-function displayImageResult(data) {
+function displayImageResult(imageList) {
+    console.log(imageList);
+    if (!imageList) return;
     let resultCardBody = document.getElementById("resultCardBody");
-    resultCardBody.innerHTML = ""; // 清空容器内容
+    // resultCardBody.innerHTML = ""; // 清空容器内容
     resultCardBody.classList.add("d-flex", "align-items-center", "m-3");
-    let imageList = data.no_watermark_image_list;
     for (let i = 0; i < imageList.length; i++) {
         // div包裹img
         let imageDiv = document.createElement("div");
         imageDiv.classList.add("col-md-12", "col-lg-6", "px-2", "mb-3");
         const imageEle = document.createElement("img");
-        imageEle.setAttribute("src", imageList[i]);
+        imageEle.setAttribute("src", imageList[i].url);
         imageEle.setAttribute("width", "100%");
         imageDiv.appendChild(imageEle);
         // card body包裹多个img的div
         resultCardBody.appendChild(imageDiv);
     }
-    resultCardBody.appendChild(imageDiv);
 }
 
 function showDownloadSuccessToast() {
