@@ -4,7 +4,7 @@ const envVars = {
     PROXY_BASE: process.env.PROXY_BASE,
     BACKEND: process.env.BACKEND,
 };
-
+console.log(process.env);
 console.log("envVars: ", envVars);
 
 const buildCommand = `parcel build src/index.html --public-url / --dist-dir dist --no-source-maps`;
