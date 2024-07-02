@@ -2,16 +2,13 @@
 // Import only the Bootstrap components we need
 // import { Alert } from "./bootstrap.bundle.min";
 // import './bootstrap.min.js';
-import { Toast, Alert } from "bootstrap";
+import { Toast } from "bootstrap";
 import streamSaver from "streamsaver";
 
-console.log("CF_PAGES_URL: ", process.env.CF_PAGES_URL);
 console.log(process.env.BACKEND);
-// const PROXY_BASE = 'https://proxy.im-victor.workers.dev';
-// const BACKEND = 'https://toolkit.lte.ink:8000';
 console.log("PROXY_BASE", process.env.PROXY_BASE);
-const PROXY_BASE = process.env.PROXY_BASE || "https://proxy.lte.ink";
-const BACKEND = process.env.BACKEND || "https://toolkit.lte.ink";
+const PROXY_BASE = process.env.PROXY_BASE;
+const BACKEND = process.env.BACKEND;
 let corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": true,
